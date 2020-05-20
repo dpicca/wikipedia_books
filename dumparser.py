@@ -4,7 +4,6 @@ from Character import Character
 class DumpParser():
 
     def check_characters(self, markdown):
-        global characters
         characters = {}
         
         REGEX_CHARACTERS_LIST = re.compile(r'(\\n={2,}[\w\s]*[Cc]haracters\s*={2,}\\n)(.+?)(?=\\n\\n==[^=]+==\\n)')
