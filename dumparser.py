@@ -22,9 +22,9 @@ class DumpParser():
             
             characters[name] = description
 
-        def get_charaters():
+        def get_characters():
             return [Character(key, item) for key, item in characters.items()]
         
-        characters_list = get_charaters()
+        characters_list = get_characters()
 
         return characters_list
