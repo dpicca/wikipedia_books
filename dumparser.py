@@ -5,6 +5,7 @@ class DumpParser():
 
     def check_characters(self, markdown):
         characters = {}
+        characters_list = []
         
         REGEX_CHARACTERS_LIST = re.compile(r'(\\n={2,}[\w\s]*[Cc]haracters\s*={2,}\\n)(.+?)(?=\\n\\n==[^=]+==\\n)')
         REGEX_CHARACTER_DESC = re.compile(r"(\\'\\'\\'|\s*|===|)(.+?)(\\'\\'\\'|\s*|===)(:\s|\n|-\s|,\s)(.+?)(\\n\*|\\n\\n|\\n,)")

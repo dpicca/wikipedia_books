@@ -5,5 +5,5 @@ class Character:
   Character:str
   Description:str
   
-assert asdict(Character)
+#assert asdict(Character)
 

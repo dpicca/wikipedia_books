@@ -1,10 +1,10 @@
-from dataclasses import dataclass, asdict
+from dataclasses import dataclass, asdict, field
 from Character import Character
 
 @dataclass
-class Book(Character):
+class Book():
   Title:str
   Author:str
-  Characters: list(Character)
+  Characters: list() = field(default="None")
 
-assert asdict(Book) 
+#assert asdict(Book) 
