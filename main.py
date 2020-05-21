@@ -40,8 +40,8 @@ def main():
     #provisoire
     output_path = Path("books.txt")
     with output_path.open(mode="w", encoding="utf-8") as books_text:
-        for truc in books_output:
-            books_text.write("\n" + str(truc))
+        for book in books_output:
+            books_text.write("\n" + str(book))
 
 if __name__ == "__main__":
     main()
