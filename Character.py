@@ -4,6 +4,3 @@ from dataclasses import dataclass, asdict
 class Character:
   Character:str
   Description:str
-  
-#assert asdict(Character)
-

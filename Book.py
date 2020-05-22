@@ -6,5 +6,3 @@ class Book():
   Title:str
   Author:str
   Characters: list() = field(default="None")
-
-#assert asdict(Book) 
