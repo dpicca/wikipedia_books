@@ -8,9 +8,10 @@ class DumpParser():
 
         regex_charac_list = re.compile(r"""(\\n={2,}[\w\s]*[Cc]haracters\s*={2,}\\n)
                                                 (.+?)(?=\\n\\n==[^=]+==\\n)""", re.X)
-        regex_charac_v1 = re.compile(r"(\\'\\'\\')(.+?)(\\'\\'\\'\s?)(:\s|–\s|-\s|,\s)(.+?)(\\n\*)")
-        regex_charac_v2 = re.compile(r"(===)(.+?)(===)(\n)(.+?)(\\n\\n)")
-        regex_charac_v3 = re.compile(r"(\\s\*)(.+?)(:\s)(.+?)(\\n\*|\\n;)")
+        regex_charac_v1 = re.compile(r"(\\'\\'\\')(.+?)(\\'\\'\\'\s?)(:\s|–\s|-\s|,\s|\\n|\s)(.+?)(\\n\*?)")
+        regex_charac_v2 = re.compile(r"(===)(.+?)(===)(\\n)(.+?)(\\n\\n)")
+        regex_charac_v3 = re.compile(r"(\\n\*\s?)(.+?)(:\s|–\s|-\s|,\s|&ndash;)(.+?)(\\n\*|\\n;)")
+        regex_charac_v4 = re.compile(r"(\\n;)(.+?)(\\n)(.+?)(\\n)")
 
         if bool(re.search(regex_charac_list, markdown)):
             for match in re.finditer(regex_charac_list, markdown):
@@ -19,7 +20,6 @@ class DumpParser():
             for match in re.finditer(regex_charac_v1, markdown):
 
                 name = match.group(2)
-
                 name = re.sub(r'\\+\'', r'', name)
                 name = re.sub(r'\[\[|\]\]', r'', name)
 
@@ -35,6 +35,7 @@ class DumpParser():
             for match in re.finditer(regex_charac_v2, markdown):
 
                 name = match.group(2)
+                name = re.sub(r'\\+\'', r'', name)
                 name = re.sub(r'\[\[|\]\]', r'', name)
 
                 description = match.group(5)
@@ -48,6 +49,21 @@ class DumpParser():
             for match in re.finditer(regex_charac_v3, markdown):
 
                 name = match.group(2)
+                name = re.sub(r'\\+\'', r'', name)
+                name = re.sub(r'\[\[|\]\]', r'', name)
+
+                description = match.group(4)
+                description = re.sub(r'\[\[|\]\]', r'', description)
+                description = re.sub(r'\\+', r'', description)
+                description = re.sub(r'<.+?>', r'', description)
+                description = re.sub(r'{{.+?}}', r'', description)
+
+                characters[name] = description
+            
+            for match in re.finditer(regex_charac_v4, markdown):
+
+                name = match.group(2)
+                name = re.sub(r'\\+\'', r'', name)
                 name = re.sub(r'\[\[|\]\]', r'', name)
 
                 description = match.group(4)
