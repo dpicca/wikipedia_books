@@ -3,8 +3,8 @@ import re
 import json
 
 from Book import Book
-from dumparser import DumpParser
-from books_with_list import books_with_list
+from dumpparser import DumpParser
+from books_with_list import BooksWithList
 
 def main():
 
@@ -15,7 +15,7 @@ def main():
             book = json.loads(row)
             books_list.append(book)
 
-    percent = books_with_list().percent_of_books(books_list)
+    percent = BooksWithList().percent_of_books(books_list)
     print("%d %% of books have a characters list." % percent)
 
     regex_title = re.compile(r'(\'title\': \')(.+?)(\',)')
