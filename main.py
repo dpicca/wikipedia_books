@@ -1,37 +1,24 @@
-import re
-import json
-
-from Book import Book
+"""main function"""
 from dumpparser import DumpParser
 from books_with_list import BooksWithList
 
 def main():
+    """
+    The main function
+    
+    Prints the percentage of books with a charcters list
+    Prints the the Book Dataclasses 
+    """
 
-    books_list = []
-
-    with open('wiki_books.json', 'r') as json_list:
-        for row in json_list:
-            book = json.loads(row)
-            books_list.append(book)
-
+    parser = DumpParser()
+    books_list = parser.import_list()
+    books_output = parser.get_book()
+    
     percent = BooksWithList().percent_of_books(books_list)
- 
-    regex_title = re.compile(r'([\'\"]title[\'\"]: [\'\"])(.+?)([\'\"],)')
-    regex_author = re.compile(r'([\'\"]author[\'\"]: ([\'\"]http:\/\/dbpedia\.org\/resource\/)?)(.+?)(?=[\'\"]?,)')
-    books_output = []
-    for book in books_list:
+    print("%d %% of the books have a characters list." % percent)
 
-        title = re.search(regex_title, str(book))
-        title = title.group(2)
-        author = re.search(regex_author, str(book))
-        author = author.group(3)
-        author = re.sub(r'_', r' ', author)
-
-        parser = DumpParser()
-        markdown = str(book)
-        characters_list = parser.check_characters(markdown)
-
-        books_output.append(Book(title, author, characters_list))
+    for book in books_output:
+        print(book)    
 
 if __name__ == "__main__":
     main()
