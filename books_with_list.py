@@ -4,11 +4,11 @@ import re
 
 class BooksWithList():
     """
-    Counts the proportion of books with a chracter list
+    Counts the proportion of books with a character list
     """
     def percent_of_books(self, books_list):
         """
-        Counts the proportion of books with a chracter list
+        Counts the proportion of books with a character list
 
         Parameters
         ----------
