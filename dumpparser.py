@@ -37,7 +37,7 @@ class DumpParser():
         """
         books_list = []
 
-        with open('test.json', 'r') as json_list:
+        with open('wiki_books.json', 'r') as json_list:
             for row in json_list:
                 book = json.loads(row)
                 books_list.append(book)
@@ -63,7 +63,7 @@ class DumpParser():
 
         regex_charac_list = re.compile(r"""(\\n={2,}[\w\s]*[Cc]haracters\s*={2,}\\n)
                                                 (.+?)(?=\\n\\n==[^=]+==\\n)""", re.X)
-        regex_charac_v1 = re.compile(r"(\\'\\'\\')(.+?)(\\'\\'\\'\s?)(:\s|–\s|-\s|,\s|\\n|\s)(.+?)(\\n\*?)")
+        regex_charac_v1 = re.compile(r"(\\'\\'\\')(.+?)(\\'\\'\\'\s?)(:\s|–\s?|-\s?|,\s|\\n|\s)(.+?)(\\n)")
         regex_charac_v2 = re.compile(r"(===)(.+?)(===)(\\n)(.+?)(\\n\\n)")
         regex_charac_v3 = re.compile(r"(\\n\*\s?)(.+?)(:\s|–\s|-\s|,\s|&ndash;)(.+?)(\\n\*|\\n;)")
         regex_charac_v4 = re.compile(r"(\\n;)(.+?)(\\n)(.+?)(\\n)")
@@ -84,7 +84,7 @@ class DumpParser():
                 description = re.sub(r'\\+', r'', description)
                 description = re.sub(r'<.+?>', r'', description)
                 description = re.sub(r'{{.+?}}', r'', description)
-
+            
                 characters[name] = description
 
             for match in re.finditer(regex_charac_v2, markdown):
