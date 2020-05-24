@@ -1,7 +1,24 @@
+""" Contains the class fetching the characters and their description"""
+
 import re
+import json
 from Character import Character
+from Book import Book
 
 class DumpParser():
+    """
+
+    """
+
+    def import_list(self):
+        books_list = []
+
+        with open('test.json', 'r') as json_list:
+            for row in json_list:
+                book = json.loads(row)
+                books_list.append(book)
+        
+        return books_list
 
     def check_characters(self, markdown):
         characters = {}
@@ -24,8 +41,8 @@ class DumpParser():
                 name = re.sub(r'\[\[|\]\]', r'', name)
 
                 description = match.group(5)
-
                 description = re.sub(r'\[\[|\]\]', r'', description)
+                description = re.sub(r'\\+\'', r'', description)
                 description = re.sub(r'\\+', r'', description)
                 description = re.sub(r'<.+?>', r'', description)
                 description = re.sub(r'{{.+?}}', r'', description)
@@ -40,6 +57,7 @@ class DumpParser():
 
                 description = match.group(5)
                 description = re.sub(r'\[\[|\]\]', r'', description)
+                description = re.sub(r'\\+\'', r'', description)
                 description = re.sub(r'\\+', r'', description)
                 description = re.sub(r'<.+?>', r'', description)
                 description = re.sub(r'{{.+?}}', r'', description)
@@ -54,6 +72,7 @@ class DumpParser():
 
                 description = match.group(4)
                 description = re.sub(r'\[\[|\]\]', r'', description)
+                description = re.sub(r'\\+\'', r'', description)
                 description = re.sub(r'\\+', r'', description)
                 description = re.sub(r'<.+?>', r'', description)
                 description = re.sub(r'{{.+?}}', r'', description)
@@ -68,6 +87,7 @@ class DumpParser():
 
                 description = match.group(4)
                 description = re.sub(r'\[\[|\]\]', r'', description)
+                description = re.sub(r'\\+\'', r'', description)
                 description = re.sub(r'\\+', r'', description)
                 description = re.sub(r'<.+?>', r'', description)
                 description = re.sub(r'{{.+?}}', r'', description)
@@ -78,3 +98,28 @@ class DumpParser():
                 return [Character(key, item) for key, item in characters.items()]
 
             return get_characters()
+
+    def get_book(self):
+
+        parser = DumpParser()
+        books_list = parser.import_list()
+
+        regex_title = re.compile(r'([\'\"]title[\'\"]: [\'\"])(.+?)([\'\"],)')
+        regex_author = re.compile(r'([\'\"]author[\'\"]: ([\'\"]http:\/\/dbpedia\.org\/resource\/)?)(.+?)(?=[\'\"]?,)')
+        books_output = []
+
+        for book in books_list:
+        
+            title = re.search(regex_title, str(book))
+            title = title.group(2)
+
+            author = re.search(regex_author, str(book))
+            author = author.group(3)
+            author = re.sub(r'_', r' ', author)
+
+            markdown = str(book)
+            characters_list = parser.check_characters(markdown)
+
+            books_output.append(Book(title, author, characters_list))
+
+        return books_output
