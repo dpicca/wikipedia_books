@@ -18,7 +18,7 @@ class DumpParser():
         books_list = parser.import_list()
         books_output = parser.get_book()
 
-        Book(Title='Dracula', Author='Bram Stoker', 
+        Book(Title='Dracula', Author='Bram Stoker',
             Characters=[Character(Character='Count Dracula', Description='A Transylvanian noble who has purchased a house in London.'),
             Character(Character='Lucy Westenra', Description="A 19-year-old aristocrat; Mina's best friend; Arthur's fiancée and Dracula's first victim. "),
             Character(Character='John Seward', Description="A doctor; one of Lucy's suitors and a former student of Van Helsing."),
@@ -41,7 +41,7 @@ class DumpParser():
             for row in json_list:
                 book = json.loads(row)
                 books_list.append(book)
-        
+
         return books_list
 
     def check_characters(self, markdown):
@@ -52,7 +52,7 @@ class DumpParser():
         ----------
         markdown = str
             a string of every book the books_list
-        
+
         Returns
         -------
         get_characters(): list
@@ -63,7 +63,8 @@ class DumpParser():
 
         regex_charac_list = re.compile(r"""(\\n={2,}[\w\s]*[Cc]haracters\s*={2,}\\n)
                                                 (.+?)(?=\\n\\n==[^=]+==\\n)""", re.X)
-        regex_charac_v1 = re.compile(r"(\\'\\'\\')(.+?)(\\'\\'\\'\s?)(:\s|–\s?|-\s?|,\s|\\n|\s)(.+?)(\\n)")
+        regex_charac_v1 = re.compile(r"""(\\'\\'\\')(.+?)(\\'\\'\\'\s?)
+                                         (:\s|–\s?|-\s?|,\s|\\n|\s)(.+?)(\\n)""", re.X)
         regex_charac_v2 = re.compile(r"(===)(.+?)(===)(\\n)(.+?)(\\n\\n)")
         regex_charac_v3 = re.compile(r"(\\n\*\s?)(.+?)(:\s|–\s|-\s|,\s|&ndash;)(.+?)(\\n\*|\\n;)")
         regex_charac_v4 = re.compile(r"(\\n;)(.+?)(\\n)(.+?)(\\n)")
@@ -84,7 +85,7 @@ class DumpParser():
                 description = re.sub(r'\\+', r'', description)
                 description = re.sub(r'<.+?>', r'', description)
                 description = re.sub(r'{{.+?}}', r'', description)
-            
+
                 characters[name] = description
 
             for match in re.finditer(regex_charac_v2, markdown):
@@ -116,7 +117,7 @@ class DumpParser():
                 description = re.sub(r'{{.+?}}', r'', description)
 
                 characters[name] = description
-            
+
             for match in re.finditer(regex_charac_v4, markdown):
 
                 name = match.group(2)
@@ -140,7 +141,7 @@ class DumpParser():
                 -------
                 :list
                     a list of every Dataclass Character for a book
-                
+
                 Example
                 -------
                 ::
@@ -162,15 +163,15 @@ class DumpParser():
         -------
         books_output:list
             a list of every Book Dataclass created from the json file
-        
+
         Example
         -------
         ::
-            Book(Title='Flash Crowd', Author='None', Characters=[Character(Character='George Lincoln Bailey ', Description='CBA editor'), 
-                Character(Character='Janice Wolfe ', Description='friend of Jerryberry'), 
-                Character(Character='Gregory Scheffer ', Description='customs guard.'), 
+            Book(Title='Flash Crowd', Author='None', Characters=[Character(Character='George Lincoln Bailey ', Description='CBA editor'),
+                Character(Character='Janice Wolfe ', Description='friend of Jerryberry'),
+                Character(Character='Gregory Scheffer ', Description='customs guard.'),
                 Character(Character='Harry McCord ', Description='former Los Angeles Police Department Chief. ')])
-            Book(Title='Fourier analysis', Author='None', Characters=None)  
+            Book(Title='Fourier analysis', Author='None', Characters=None)
         """
 
         parser = DumpParser()
@@ -181,7 +182,7 @@ class DumpParser():
         books_output = []
 
         for book in books_list:
-        
+
             title = re.search(regex_title, str(book))
             title = title.group(2)
 
