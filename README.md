@@ -35,3 +35,5 @@ The results are shown like this :
 Book(Title='Animalia (book)', Author='Graeme Base', Characters=None)
 Book(Title='Anthropology', Author='None', Characters=None)
 Book(Title='Blade Runner 2: The Edge of Human', Author='K. W. Jeter', Characters=[Character(Character='Roy Batty', Description='The man which Tyrell used as the template for his combat replicants is in fact a man of considerable instability, suffering from a brain disorder that prevents him from experiencing fear.'), Character(Character='Dave Holden', Description='Starting off bed-ridden after his attack by the replicant Leon, Holden is rescued by Roy who in turn leads him to some startling revelations.')])
+
+See the ```results.txt``` file for the full results.
