@@ -1,3 +1,4 @@
+""" Contains the class Book, holding the Title, Author and Character list of each Book"""
 from dataclasses import dataclass, asdict, field
 from Character import Character
 

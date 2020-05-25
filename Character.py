@@ -1,3 +1,4 @@
+""" Contains the class holding the characters and their description"""
 from dataclasses import dataclass, asdict
 
 @dataclass
