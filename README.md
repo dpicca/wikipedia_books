@@ -28,4 +28,10 @@ Our code follows this logic: For each book, therefore each entry on the .json fi
 
 Results
 -------
-
+After parsing the whole, it shows that only 7% of the Books actually have a Characters list. This number is not that surprising considering a majority of wikipedia Books are either articles or scientific Books rather than Novels. 
+Then, among this 7% of Book with a Character list, we were able to extract around 80% of the Characters and their description. 
+The results are shown like this :
+```
+Book(Title='Animalia (book)', Author='Graeme Base', Characters=None)
+Book(Title='Anthropology', Author='None', Characters=None)
+Book(Title='Blade Runner 2: The Edge of Human', Author='K. W. Jeter', Characters=[Character(Character='Roy Batty', Description='The man which Tyrell used as the template for his combat replicants is in fact a man of considerable instability, suffering from a brain disorder that prevents him from experiencing fear.'), Character(Character='Dave Holden', Description='Starting off bed-ridden after his attack by the replicant Leon, Holden is rescued by Roy who in turn leads him to some startling revelations.')])
